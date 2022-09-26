@@ -9,13 +9,13 @@ public class PlayerMovement : MonoBehaviour
     float turnSmoothTime;
     float turnSmoothVelocity;
     public Transform cam;
-    Joystick joyStick;
+    //Joystick joyStick;
     Animator anim;
     static string PLAYER_RUN = "Run";
     // Start is called before the first frame update
     void Awake()
     {
-        joyStick = GameObject.Find("Joystick").GetComponent<Joystick>();
+        //joyStick = GameObject.Find("Joystick").GetComponent<Joystick>();
         speed = 1f;
         anim = GetComponent<Animator>();
         turnSmoothTime = 0.1f;
@@ -29,16 +29,22 @@ public class PlayerMovement : MonoBehaviour
 
     void MovePlayer()
     {
-        float joyHorizontal = joyStick.Horizontal;
-        float joyVertical = joyStick.Vertical;
+        /*float joyHorizontal = 0;
+        float joyVertical = 0;
+
+        if (joyStick != null)
+        {
+            joyHorizontal = joyStick.Horizontal;
+            joyVertical = joyStick.Vertical;
+        }*/
 
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
 
         Vector3 direction = new Vector3(horizontal, 0, vertical).normalized;
-        Vector3 joyDirection = new Vector3(joyHorizontal, 0, joyVertical).normalized;
+        //Vector3 joyDirection = new Vector3(joyHorizontal, 0, joyVertical).normalized;
 
-        if (direction.magnitude >= 0.1f || joyDirection.magnitude >= 0.1f)
+        if (direction.magnitude >= 0.1f /*|| joyDirection.magnitude >= 0.1f*/)
         {
             float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
             float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
